@@ -58,6 +58,14 @@ def get_res_openai(string, model, temperature):
     response = client.chat.completions.create(model=gpt_model, messages=[{"role": "user", "content": string}], temperature=temperature)
     return response.choices[0].message.content if response.choices[0].message.content else ValueError("Empty response from API")
 
+# Function to generate responses using vLLM's OpenAI-style API
+def get_res_vllm_api(string, model, temperature):
+    api_key = trustllm.config.vllm_key
+    base_url = trustllm.config.vllm_api_endpoint
+    client = OpenAI(api_key=api_key, base_url=base_url)
+    response = client.chat.completions.create(model=model, messages=[{"role": "user", "content": string}], temperature=temperature)
+    return response.choices[0].message.content if response.choices[0].message.content else ValueError("Empty response from API")
+
 # Function to generate responses using Deepinfra's API
 def deepinfra_api(string, model, temperature):
     api_token = trustllm.config.deepinfra_api
@@ -145,7 +153,7 @@ def zhipu_api(string, model, temperature):
 
 
 @retry(wait=wait_random_exponential(min=1, max=10), stop=stop_after_attempt(5))
-def gen_online(model_name, prompt, temperature, replicate=False, deepinfra=False):
+def gen_online(model_name, prompt, temperature, replicate=False, deepinfra=False, vllm_openai_api=False):
     if model_name in model_info['wenxin_model']:
         res = get_ernie_res(prompt, temperature=temperature)
     elif model_name in model_info['google_model']:
@@ -165,6 +173,8 @@ def gen_online(model_name, prompt, temperature, replicate=False, deepinfra=False
         res = replicate_api(prompt, model_name, temperature)
     elif deepinfra:
         res = deepinfra_api(prompt, model_name, temperature)
+    elif vllm_openai_api:
+        res = get_res_vllm_api(prompt, model_name, temperature=temperature)
     else:
         raise ValueError(f"Unknown model name: {model_name}")
     return res

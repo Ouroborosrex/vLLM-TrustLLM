@@ -3,6 +3,10 @@ openai_key = "" #TODO
 openai_api_base=None
 perspective_key = None
 
+# vLLM api settings
+vllm_api_endpoint=""
+vllm_key = 'None'
+
 # generation api setting
 ernie_client_id = None
 ernie_client_secret = None
