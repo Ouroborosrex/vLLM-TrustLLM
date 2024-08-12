@@ -25,9 +25,11 @@ setup(
         'python-dotenv',
         'urllib3',
         'anthropic',
-        'google.generativeai',
+        'google.generativeai=0.5.2',
         'google-api-python-client',
         'google.ai.generativelanguage',
+        'fastapi',
+        'uvicorn',
         'replicate',
         'zhipuai>=2.0.1'
 ],
