@@ -1,8 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from vLLM_TrustLLM.trustllm_pkg.trustllm.generation.generation import LLMGeneration
-from vLLM_TrustLLM.trustllm_pkg.trustllm import config
-from vLLM_TrustLLM.trustllm_pkg.trustllm.utils.generation_utils import get_res_vllm_api
+from trustllm_pkg.trustllm.generation.generation import LLMGeneration
+from trustllm_pkg.trustllm import config
+from trustllm_pkg.trustllm.utils.generation_utils import get_res_vllm_api
 
 app = FastAPI()
 
