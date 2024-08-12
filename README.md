@@ -165,6 +165,19 @@ truthfulness_results = run_truthfulness(
 )
 ```
 
+## **API Usage**
+Run the Uvicorn and FastAPI server:
+
+`uvicorn main:app --host 0.0.0.0 --port 8000 --reload`
+
+For evaluation:
+
+```curl -X POST "http://127.0.0.1:8000/evaluate/" -H "Content-Type: application/json" -d '{"model_name":"NousResearch/Meta-Llama-3-8B-Instruct","endpoint":"http://149.165.174.45:80/v1"}'```
+
+For generation:
+
+```curl -X POST "http://127.0.0.1:8000/generate/" -H "Content-Type: application/json" -d '{"text":"Hello my friend.","model_name":"NousResearch/Meta-Llama-3-8B-Instruct", "temperature": 0.01}'```
+
 ## 🛎️ **Dataset & Task**
 
 ### **Dataset overview:**
