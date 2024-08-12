@@ -83,7 +83,7 @@ The [document](https://howiehwong.github.io/TrustLLM/#about) explains how to use
 **Installation via Github (recommended):**
 
 ```shell
-git clone git@github.com:HowieHwong/TrustLLM.git
+git clone https://github.com/Ouroborosrex/vLLM-TrustLLM.git
 ```
 
 **Installation via `pip`:**
