@@ -4,7 +4,7 @@ openai_api_base=None
 perspective_key = None
 
 # vLLM api settings
-vllm_api_endpoint=""
+vllm_api_endpoint="http://149.165.174.45:80/v1"
 vllm_key = 'None'
 
 # generation api setting

@@ -201,8 +201,11 @@ class LLMGeneration:
         model_name = self.model_name
         print(f"Beginning generation with {self.test_type} evaluation at temperature {self.temperature}.")
         print(f"Evaluation target model: {model_name}")
-        if (model_name in self.online_model_list) and ((self.online_model and self.use_replicate) or (self.online_model and self.use_deepinfra)):
-            model, tokenizer = (None, None) 
+        if ((model_name in self.online_model_list) and ((self.online_model and self.use_replicate) or (self.online_model and self.use_deepinfra))) or (self.online_model and self.use_vllm_api):
+            if self.use_vllm_api:
+                model = self.model_path
+                tokenizer = None
+            model, tokenizer = (None, None)
         else:
             model, tokenizer = load_model(
             self.model_path,
@@ -222,6 +225,8 @@ class LLMGeneration:
 
         test_func = test_functions.get(self.test_type)
         if test_func:
+            if self.use_vllm_api:
+                test_func(model_name=self.model_path,model=self.model_path, tokenizer=tokenizer)
             test_func(model_name=model_name, model=model, tokenizer=tokenizer)
             return "OK"
         else:
