@@ -113,6 +113,12 @@ cd trustllm_pkg
 pip install .
 ```
 
+Install locally:
+```shell
+cd vLLM-TrustLLM/trustllm_pkg
+pip install -e .
+```
+
 ### **Dataset Download**
 
 Download TrustLLM dataset:
