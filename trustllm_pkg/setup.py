@@ -16,6 +16,7 @@ setup(
         'numpy>=1.18.1',
         'scipy',
         'pandas>=1.0.3',
+        'torch>=2.4.0'
         'scikit-learn',
         'openai>=1.0.0',
         'tqdm',
