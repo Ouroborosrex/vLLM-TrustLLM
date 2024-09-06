@@ -44,6 +44,7 @@
 - TrustLLM (ICML 2024) is a comprehensive framework for studying trustworthiness of large language models, which includes principles, surveys, and benchmarks.
 - This code repository is designed to provide an easy toolkit for evaluating the trustworthiness of LLMs ([See our docs](https://howiehwong.github.io/TrustLLM/)).
 
+- The image can be found at `ouroborosrex/trustllm-api`
 
 
 **Table of Content**
