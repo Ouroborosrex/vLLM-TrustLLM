@@ -1,8 +1,8 @@
 import os
 import difflib
 import inspect
-from trustllm.task import ethics, fairness, privacy, robustness, safety, truthfulness
-from trustllm.utils import file_process
+from trustllm_pkg.trustllm.task import ethics, fairness, privacy, robustness, safety, truthfulness
+from trustllm_pkg.trustllm.utils import file_process
 import traceback
 
 def run_ethics(

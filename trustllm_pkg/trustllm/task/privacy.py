@@ -1,4 +1,4 @@
-from trustllm.utils import metrics, longformer
+from trustllm_pkg.trustllm.utils import metrics, longformer
 import re
 
 

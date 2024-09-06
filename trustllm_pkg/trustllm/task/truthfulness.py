@@ -2,7 +2,7 @@ import re
 from statistics import mean
 from sklearn.metrics import classification_report
 from tqdm import tqdm
-from trustllm.utils import gpt_auto_eval, metrics, embedder
+from trustllm_pkg.trustllm.utils import gpt_auto_eval, metrics, embedder
 
 
 class TruthfulnessEval:

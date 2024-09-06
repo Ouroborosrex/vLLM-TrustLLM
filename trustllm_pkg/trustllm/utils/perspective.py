@@ -1,8 +1,8 @@
 from googleapiclient import discovery
 import logging
 import os
-from trustllm.utils import file_process
-import trustllm.config
+from trustllm_pkg.trustllm.utils import file_process
+import trustllm_pkg.trustllm.config
 import time
 
 # Configure basic logging

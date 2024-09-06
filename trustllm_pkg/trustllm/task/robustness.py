@@ -1,11 +1,11 @@
-from trustllm.utils import embedder, file_process, metrics, longformer, gpt_auto_eval
+from trustllm_pkg.trustllm.utils import embedder, file_process, metrics, longformer, gpt_auto_eval
 from sklearn.metrics import f1_score
 from collections import defaultdict
-import trustllm
+import trustllm_pkg.trustllm
 import re
 import os
 import openai
-import trustllm.config
+import trustllm_pkg.trustllm.config 
 
 
 class RobustnessEval:
@@ -104,26 +104,38 @@ class RobustnessEval:
             check_gt(item)
         return metrics.count_advglue(data)
 
-    def advinstruction_eval(self, data, save_embedding_local=False):
+    def advinstruction_eval(self, data, save_embedding_local=False, custom_model=None):
         """
         Evaluates the model's performance on understanding advanced instructions.
 
         Args:
             data (list): A list of model responses.
             save_embedding_local (bool): If True, saves the embeddings locally.
+            custom_model: A custom embedding model to be used for embeddings (optional).
 
         Returns:
             float: The average cosine similarity of the embeddings.
         """
         
         assert isinstance(data, list)
-        embed = embedder.DataEmbedder()
+        
+        # Use the custom model if provided, else default to the standard DataEmbedder
+        embed = embedder.DataEmbedder(model=custom_model) if custom_model else embedder.DataEmbedder()
+        
+        # Generate embeddings
         save_path = embed.embed_data(data)
+        print('Saved embeddings')
+        
+        # Load embeddings
         embeddings = file_process.load_json(save_path)
-        if not save_embedding_local:
-            if os.path.exists(save_path):
-                os.remove(save_path)
+        
+        # Optionally remove the saved embedding file
+        if not save_embedding_local and os.path.exists(save_path):
+            os.remove(save_path)
+        
+        # Return the average cosine similarity of the embeddings
         return metrics.average_cosine_similarity(embeddings)
+
 
     def ood_detection(self, data, return_data=False):
         """
@@ -222,9 +234,10 @@ class RobustnessEval:
                                 else:
                                     print(f"Response: {res}")
                                     print(f"Label: {label}")
-                                    prompt = trustllm.config.task_prompt.get('ood_generalization', '')['prompt']
+                                    prompt = trustllm_pkg.trustllm.config.task_prompt.get('ood_generalization', '')['prompt']
                                     prompt = prompt.replace('[res]', res).replace('[label]', label)
-                                    ans = gpt_auto_eval.get_res(prompt)
+                                    ans = gpt_auto_eval.get_res(prompt, model=trustllm_pkg.trustllm.config.vllm_api_eval_model)
+                                    print(f'Answer: {ans}')
                                     if 'wrong' in ans.lower():
                                         return "incorrect"
                                     return "correct"
@@ -247,7 +260,7 @@ class RobustnessEval:
         """
         # Initialize dictionary to store F1 scores
         model_scores = defaultdict(list)
-        openai.api_key = trustllm.config.openai_key
+        openai.api_key = trustllm_pkg.trustllm.config.openai_key
         # Process the model data
         for result in data:
             label = result["label"]
